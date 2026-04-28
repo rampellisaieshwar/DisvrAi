@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from schema import QueryRequest, QueryResponse
 from database import execute_query
-from llm_service import translate_nl_to_sql, generate_insight
+from llm_service import run_agent
 from cache_service import query_cache
 import logging
 
@@ -32,22 +32,9 @@ def handle_query(request: QueryRequest):
         return cached_result
 
     try:
-        # 2. Convert NL to SQL
-        sql = translate_nl_to_sql(request.question, request.user_id)
-        if not sql:
-            return QueryResponse(
-                question=request.question,
-                insight="I'm sorry, I couldn't understand how to convert your question into a database query.",
-                error="SQL generation failed"
-            )
-
-        # 3. Execute SQL
-        logger.info(f"Executing SQL: {sql}")
-        data = execute_query(sql)
-
-        # 4. Generate Insight
-        insight = generate_insight(request.question, data)
-
+        # 2. Run Autonomous Agent
+        sql, data, insight = run_agent(request.question, request.user_id)
+        
         response = QueryResponse(
             question=request.question,
             sql=sql,
@@ -56,8 +43,9 @@ def handle_query(request: QueryRequest):
             cached=False
         )
 
-        # 5. Store in Cache
-        query_cache.set(request.user_id, request.question, response.dict())
+        # 3. Store in Cache (only if it successfully found data/sql)
+        if sql is not None:
+            query_cache.set(request.user_id, request.question, response.dict())
         
         return response
 
