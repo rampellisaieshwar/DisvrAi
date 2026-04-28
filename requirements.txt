@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+pydantic
+openai
+sqlite3  # Standard library, but good to mention
+python-dotenv

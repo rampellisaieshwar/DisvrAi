@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+db.sqlite3
+README.md
+interview_notes.md
+.DS_Store
