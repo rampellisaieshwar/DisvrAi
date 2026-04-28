@@ -6,7 +6,7 @@ An AI-powered backend system that converts natural language financial queries in
 - **NL to SQL**: Converts questions like "How much did I spend on food?" into PostgreSQL queries.
 - **LLM Insights**: Summarizes raw database results into natural language.
 - **Safety First**: Whitelists only `SELECT` queries and blocks destructive keywords.
-- **Caching**: In-memory caching for performance.
+- **Semantic Caching**: In-memory vector embeddings (via `fastembed`) to catch identically-meaning questions.
 - **FastAPI**: Modern, fast (high-performance) web framework.
 
 ## Project Structure
@@ -17,7 +17,6 @@ project/
 ├── llm_service.py       # NL-to-SQL & Insight logic
 ├── cache_service.py     # In-memory caching
 ├── schema.py            # Pydantic models
-├── data_gen.py          # Mock data generator
 ├── test_queries.py      # Manual testing script
 ├── requirements.txt     # Dependencies
 └── interview_notes.md   # Prep for interview questions
@@ -33,10 +32,6 @@ project/
    ```bash
    export GROQ_API_KEY='your-groq-api-key'
    export DATABASE_URL='postgresql://postgres.project-ref:password@aws-0-region.pooler.supabase.com:6543/postgres'
-   ```
-4. **Seed the Database**:
-   ```bash
-   python data_gen.py
    ```
 
 ## Running the API
