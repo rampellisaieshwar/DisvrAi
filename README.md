@@ -3,7 +3,7 @@
 An AI-powered backend system that converts natural language financial queries into SQL, executes them, and enhances the results with LLM-generated insights.
 
 ## Features
-- **NL to SQL**: Converts questions like "How much did I spend on food?" into SQLite queries.
+- **NL to SQL**: Converts questions like "How much did I spend on food?" into PostgreSQL queries.
 - **LLM Insights**: Summarizes raw database results into natural language.
 - **Safety First**: Whitelists only `SELECT` queries and blocks destructive keywords.
 - **Caching**: In-memory caching for performance.
@@ -13,7 +13,7 @@ An AI-powered backend system that converts natural language financial queries in
 ```text
 project/
 ├── main.py              # FastAPI application & endpoints
-├── database.py          # SQLite connection & execution
+├── database.py          # PostgreSQL (Supabase) connection & execution
 ├── llm_service.py       # NL-to-SQL & Insight logic
 ├── cache_service.py     # In-memory caching
 ├── schema.py            # Pydantic models
@@ -30,9 +30,9 @@ project/
    ```bash
    pip install -r requirements.txt
    ```
-3. **Set your API Key**:
    ```bash
-   export OPENAI_API_KEY='your-api-key-here'
+   export GROQ_API_KEY='your-groq-api-key'
+   export DATABASE_URL='postgresql://postgres.project-ref:password@aws-0-region.pooler.supabase.com:6543/postgres'
    ```
 4. **Seed the Database**:
    ```bash
@@ -41,11 +41,16 @@ project/
 
 ## Running the API
 
-Start the server using Uvicorn:
+Start the server locally using Uvicorn:
 ```bash
 uvicorn main:app --reload
 ```
 The API will be available at `http://localhost:8000`.
+
+Alternatively, the project is structured to be deployed directly on **Render** using the start command:
+```bash
+uvicorn main:app --host 0.0.0.0 --port $PORT
+```
 
 ## Testing
 
@@ -54,9 +59,9 @@ You can use the provided test script:
 python test_queries.py
 ```
 
-Or use `curl`:
+Or use `curl` to hit the live Render deployment (if applicable) or your local server:
 ```bash
-curl -X POST "http://localhost:8000/query" \
+curl -X POST "https://disvrai-api.onrender.com/query" \
      -H "Content-Type: application/json" \
      -d '{"user_id": 1, "question": "How much did I spend on food last month?"}'
 ```
