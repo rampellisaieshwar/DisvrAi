@@ -30,12 +30,15 @@ def seed_data():
 
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.executemany("""
-        INSERT INTO transactions (user_id, amount, category, merchant, transaction_date)
-        VALUES (?, ?, ?, ?, ?)
-    """, transactions)
-    conn.commit()
-    conn.close()
+    try:
+        cursor.executemany("""
+            INSERT INTO transactions (user_id, amount, category, merchant, transaction_date)
+            VALUES (%s, %s, %s, %s, %s)
+        """, transactions)
+        conn.commit()
+    finally:
+        cursor.close()
+        conn.close()
     print(f"Successfully seeded 50 transactions for user_id 1.")
 
 if __name__ == "__main__":

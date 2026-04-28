@@ -4,3 +4,4 @@ pydantic
 openai
 groq
 python-dotenv
+psycopg2-binary

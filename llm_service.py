@@ -26,7 +26,7 @@ def translate_nl_to_sql(question: str, user_id: int) -> str:
     current_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
     prompt = f"""
-    You are a SQL expert. Convert the following natural language question into a valid SQLite query.
+    You are a SQL expert. Convert the following natural language question into a valid PostgreSQL query.
     
     {SCHEMA_CONTEXT}
     
