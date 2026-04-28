@@ -19,7 +19,7 @@ def health_check():
 def handle_query(request: QueryRequest):
     """
     Main endpoint that processes NL queries.
-    Pipeline: Cache -> NL2SQL -> DB -> LLM Insight -> Return
+    Pipeline: Cache -> Autonomous Agent (ReAct Loop) -> Return
     """
     # 1. Check Cache
     cached_result, is_semantic = query_cache.get(request.user_id, request.question)

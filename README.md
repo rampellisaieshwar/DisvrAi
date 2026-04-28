@@ -3,7 +3,7 @@
 An AI-powered backend system that converts natural language financial queries into SQL, executes them, and enhances the results with LLM-generated insights.
 
 ## Features
-- **NL to SQL**: Converts questions like "How much did I spend on food?" into PostgreSQL queries.
+- **Autonomous Agent (ReAct)**: Uses Groq LLM tool calling to autonomously generate SQL, execute it, and self-correct errors.
 - **LLM Insights**: Summarizes raw database results into natural language.
 - **Safety First**: Whitelists only `SELECT` queries and blocks destructive keywords.
 - **Semantic Caching**: In-memory vector embeddings (via `fastembed`) to catch identically-meaning questions.
@@ -14,7 +14,7 @@ An AI-powered backend system that converts natural language financial queries in
 project/
 ├── main.py              # FastAPI application & endpoints
 ├── database.py          # PostgreSQL (Supabase) connection & execution
-├── llm_service.py       # NL-to-SQL & Insight logic
+├── llm_service.py       # Autonomous Agent (ReAct Loop & Tool Calling)
 ├── cache_service.py     # In-memory caching
 ├── schema.py            # Pydantic models
 ├── test_queries.py      # Manual testing script
