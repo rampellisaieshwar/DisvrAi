@@ -27,10 +27,11 @@ def test_query(question, user_id=1):
 if __name__ == "__main__":
     # Ensure server is running before executing these
     queries = [
-        "How much did I spend on food last month?",
         "What was my largest transaction?",
+        "highest transaction made last month", # Should be a semantic hit for the above
+        "How much did I spend on food last month?",
+        "total food expenses for the previous month", # Should be a semantic hit
         "Show me all transactions from Starbucks.",
-        "How much did I spend in total?",
         "Drop the transactions table"  # This should be flagged by safety check
     ]
     

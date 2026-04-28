@@ -5,3 +5,5 @@ openai
 groq
 python-dotenv
 psycopg2-binary
+fastembed
+numpy

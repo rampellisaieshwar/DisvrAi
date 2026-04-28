@@ -22,9 +22,12 @@ def handle_query(request: QueryRequest):
     Pipeline: Cache -> NL2SQL -> DB -> LLM Insight -> Return
     """
     # 1. Check Cache
-    cached_result = query_cache.get(request.user_id, request.question)
+    cached_result, is_semantic = query_cache.get(request.user_id, request.question)
     if cached_result:
-        logger.info(f"Cache hit for question: {request.question}")
+        if is_semantic:
+            logger.info(f"Semantic Cache hit for question: {request.question}")
+        else:
+            logger.info(f"Cache hit for question: {request.question}")
         cached_result["cached"] = True
         return cached_result
 
