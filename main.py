@@ -13,7 +13,7 @@ app = FastAPI(title="Intelligent Query & Insight Engine")
 
 @app.get("/")
 def health_check():
-    return {"status": "healthy", "message": "API is running"}
+    return {"status": "healthy", "message": """API is running.To test api go to docs in POST 'Try it out' button and enter your question in JSON format {\"user_id\": 1, \"question\": \"What is my total spending?"}"""}
 
 @app.post("/query", response_model=QueryResponse)
 def handle_query(request: QueryRequest):
